@@ -1,1 +1,1 @@
-web: gunicorn myproject.wsgi
+web: gunicorn CC20App.wsgi
