@@ -6,9 +6,6 @@ from .models import MyProfile
 
 # Create your views here.
 class MyProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
 
     serializer_class = MyProfileSerializer
 
