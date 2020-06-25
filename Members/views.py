@@ -16,7 +16,7 @@ import os
 @parser_classes((MultiPartParser, JSONParser))
 class ListUploadViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersListFileSerializer
 
     def get_queryset(self):
