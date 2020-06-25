@@ -16,7 +16,7 @@ import os
 @parser_classes((MultiPartParser, JSONParser))
 class ListUploadViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     serializer_class = MembersListFileSerializer
 
     def get_queryset(self):
@@ -64,7 +64,7 @@ class MembersView(APIView):
         return Response({"Success":"Members Updated"},status =201)
 
 class MembersListViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     serializer_class = MembersSerializer
 
     def get_queryset(self):
