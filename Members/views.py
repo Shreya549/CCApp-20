@@ -64,7 +64,7 @@ class MembersView(APIView):
         return Response({"Success":"Members Updated"},status =201)
 
 class MembersListViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersSerializer
 
     def get_queryset(self):
@@ -79,7 +79,7 @@ class MembersListViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=204)
 
     def perform_destroy(self, instance):
         instance.delete()
