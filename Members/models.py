@@ -18,5 +18,5 @@ def path_and_rename(instance, filename):
 # Create your models here.
 class MembersListFile(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
-    owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='member')
+    owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='member_list')
     csv = models.FileField(upload_to=path_and_rename)
