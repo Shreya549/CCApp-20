@@ -6,3 +6,4 @@ class MyProfileSerializer(serializers.ModelSerializer):
         model = MyProfile
         fields = '__all__'
         read_only_fields = ('owner',)
+

@@ -20,3 +20,12 @@ class MembersListFile(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
     owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='member_list')
     csv = models.FileField(upload_to=path_and_rename)
+
+class Members(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='member')
+    regno = models.CharField(unique = True, max_length = 10)
+    category = models.IntegerField()
+
+    
+
