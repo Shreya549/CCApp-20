@@ -17,5 +17,9 @@ class MeetingViewSet(viewsets.ModelViewSet):
         return self.update(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        print(Members.objects.filter(regno = (self.request.user.regno)).values_list('category', flat=True)[0])
-        serializer.save(owner=self.request.user)
+        try :
+            category = (Members.objects.filter(regno = (self.request.user.regno)).values_list('category', flat=True)[0])
+            if (category == 3 or category == 5):
+                serializer.save(owner=self.request.user)
+        except:
+            pass
