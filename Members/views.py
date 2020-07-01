@@ -64,7 +64,7 @@ class MembersView(APIView):
         return Response({"Success":"Members Updated"},status =201)
 
 class MembersListViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersSerializer
 
     def get_queryset(self):
