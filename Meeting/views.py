@@ -17,5 +17,5 @@ class MeetingViewSet(viewsets.ModelViewSet):
         return self.update(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        print(Members.objects.filter(regno = (self.request.user.regno)).values('category')[0])
+        print(Members.objects.filter(regno = (self.request.user.regno)).values_list('category', flat=True)[0])
         serializer.save(owner=self.request.user)
