@@ -68,7 +68,8 @@ class MembersListViewSet(viewsets.ModelViewSet):
     serializer_class = MembersSerializer
 
     def get_queryset(self):
-        return self.request.user.member.all()
+        members = Members.objects.all()
+        return (members)
 
     def perform_create(self, serializer):
         serializer.save(owner = self.request.user)
