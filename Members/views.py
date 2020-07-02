@@ -16,7 +16,7 @@ import os
 @parser_classes((MultiPartParser, JSONParser))
 class ListUploadViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersListFileSerializer
 
     def get_queryset(self):
@@ -27,7 +27,7 @@ class ListUploadViewSet(viewsets.ModelViewSet):
 
 class MembersView(APIView):
 
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
 
 
     def post(self, request):
@@ -48,23 +48,28 @@ class MembersView(APIView):
             df = pd.read_excel(csv_file, sheet_name = 'Sheet1')
         except:
             return Response({"Wrong File Type Uploaded"}, status = 404)
-
+        print (len(df))
         for i in range (len(df)):
-            
-            Members.objects.update_or_create(
+            try :
+                Members.objects.update_or_create(
                 owner = self.request.user,
                 regno = df.loc[i, 'REGNO'],
-                category = df.loc[i, 'CATEGORY']
-            )
+                category = int(df.loc[i, 'CATEGORY'])
+                )
 
-            csvs = MembersListFile.objects.all()
-            for csv in csvs:
-                csv.delete()
 
+            except:
+                continue
+
+        csvs = MembersListFile.objects.all()
+        if (len(csvs)==0):
+            return Response({"Excel does not exist"},status =201)
+        for csv in csvs:
+            csv.delete()
         return Response({"Success":"Members Updated"},status =201)
 
 class MembersListViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersSerializer
 
     def get_queryset(self):
