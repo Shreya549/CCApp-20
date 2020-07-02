@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.decorators import parser_classes
 from .serializers import MembersListFileSerializer, MembersSerializer
 from .models import MembersListFile, Members
+from profile.models import MyProfile
 from django.conf import settings
 import pandas as pd
 import os
@@ -69,7 +70,7 @@ class MembersView(APIView):
         return Response({"Success":"Members Updated"},status =201)
 
 class MembersListViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersSerializer
 
     def get_queryset(self):
@@ -89,4 +90,30 @@ class MembersListViewSet(viewsets.ModelViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
+
+class MemberNamesList(APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        members = Members.objects.all()
+        members_list = []
+        for member in members:
+            regno = member.regno
+            name = ""
+            profile = MyProfile.objects.filter(regno = regno)
+            if (not profile.exists()):
+                name = "Profile does not exist"
+            else:
+                name = profile.name
+            category = member.category
+            member_dict = {
+                "name" : name,
+                "regno" : regno,
+                "category" : category
+            }
+            members_list.append(member_dict)
+        
+        return Response({members_list}, status = 200)
+            
     
