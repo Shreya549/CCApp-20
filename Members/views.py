@@ -6,7 +6,7 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.decorators import parser_classes
 from .serializers import MembersListFileSerializer, MembersSerializer
 from .models import MembersListFile, Members
-from profile.models import MyProfile
+from Profile.models import MyProfile
 from django.conf import settings
 import pandas as pd
 import os
