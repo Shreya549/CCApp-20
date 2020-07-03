@@ -108,7 +108,7 @@ class MemberNamesList(APIView):
                 name = profile.values('name')[0]
             category = member.category
             member_dict = {
-                "name" : name,
+                name,
                 "regno" : regno,
                 "category" : category
             }
