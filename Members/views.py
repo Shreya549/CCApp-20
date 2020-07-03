@@ -114,6 +114,6 @@ class MemberNamesList(APIView):
             }
             members_list.append(member_dict)
         
-        return Response({members_list}, status = 200)
+        return Response({"members" : members_list}, status = 200)
             
     
