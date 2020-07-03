@@ -105,7 +105,7 @@ class MemberNamesList(APIView):
             if (not profile.exists()):
                 name = "Profile does not exist"
             else:
-                name = profile.name
+                name = profile.values('name')[0]
             category = member.category
             member_dict = {
                 "name" : name,
