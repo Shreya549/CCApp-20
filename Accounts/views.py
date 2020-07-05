@@ -41,6 +41,6 @@ class UserLogin(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = serializer.data['email']
-        regno = User.objects.get(email = email)
+        regno = User.objects.get(email = email).regno
         category = Members.objects.get(regno = regno).category
         return Response({"email" : serializer.data["email"],"token" : serializer.data["token"], "category" : category}, status=status.HTTP_200_OK)
