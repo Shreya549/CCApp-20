@@ -22,6 +22,6 @@ class ViewAllProfileViewSet(viewsets.ModelViewSet):
     serializer_class = MyProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    class get_queryset(self):
+    def get_queryset(self):
         profiles = MyProfile.objects.all()
         return(profiles)
