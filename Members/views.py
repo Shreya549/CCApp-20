@@ -101,11 +101,11 @@ class MemberNamesList(APIView):
         for member in members:
             regno = member.regno
             name = ""
-            profile = MyProfile.objects.get(regno = regno)
-            if (not profile.exists()):
-                name = "Profile does not exist"
-            else:
+            try:
+                profile = MyProfile.objects.get(regno = regno)
                 name = profile.name
+            except:
+                name = 'Profile does not exist'
             category = member.category
             member_dict = {
                 "name" : name,
