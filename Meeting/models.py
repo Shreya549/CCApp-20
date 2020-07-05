@@ -12,4 +12,5 @@ class Meeting(models.Model):
     time = models.TimeField()
     date = models.DateField()
     description = models.TextField()
+    members = models.CharField(max_length = 200, default = 'All Core Committee Members')
 
