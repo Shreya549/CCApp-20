@@ -18,7 +18,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         try :
-            category = Members.objects.get(regno = '18BIT0000').code
+            category = Members.objects.get(regno = self.request.user.code).code
             if (category == 3 or category == 5):
                 serializer.save(owner=self.request.user)
         except:
