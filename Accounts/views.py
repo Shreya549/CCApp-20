@@ -40,4 +40,7 @@ class UserLogin(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        email = serializer.data['email']
+        regno = User.objects.get(email = email)
+        category = Members.objects.get(regno = regno).category
+        return Response({"email" : serializer.data["email"],"token" : serializer.data["token"], "category" : category}, status=status.HTTP_200_OK)
