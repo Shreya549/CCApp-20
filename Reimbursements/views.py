@@ -4,6 +4,7 @@ from .serializers import BillSerializers
 from .models import Bill
 
 # Create your views here.
+@parser_classes((MultiPartParser, JSONParser))
 class BillViewsets(viewsets.ModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated]
