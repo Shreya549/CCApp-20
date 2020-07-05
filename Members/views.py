@@ -100,8 +100,7 @@ class MemberNamesList(APIView):
         members_list = []
         for member in members:
             regno = member.regno
-            members_list.append(regno)
-            '''
+            
             name = ""
             try:
                 profile = MyProfile.objects.get(regno = regno)
@@ -114,8 +113,8 @@ class MemberNamesList(APIView):
                 "regno" : regno,
                 "category" : category
             }
-            members_list.append(member_dict)'''
+            members_list.append(member_dict)
         
         return Response({"members" : members_list}, status = 200)
             
-    
+

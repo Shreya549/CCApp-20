@@ -8,7 +8,7 @@ from .models import MyProfile
 class MyProfileViewSet(viewsets.ModelViewSet):
 
     serializer_class = MyProfileSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
         return self.request.user.myProfile.all()
 
@@ -17,3 +17,11 @@ class MyProfileViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+class ViewAllProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = MyProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    class get_queryset(self):
+        profiles = MyProfile.objects.all()
+        return(profiles)
