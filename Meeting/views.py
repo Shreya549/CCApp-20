@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics
 from .serializers import MeetingSerializer
+from rest_framework.response import Response
 from .models import Meeting
 from Members.models import Members
 
@@ -23,3 +24,11 @@ class MeetingViewSet(viewsets.ModelViewSet):
                 serializer.save(owner=self.request.user)
         except:
             pass
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=204)
+
+    def perform_destroy(self, instance):
+        instance.delete()
