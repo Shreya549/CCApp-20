@@ -16,7 +16,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-
+ 
     def perform_create(self, serializer):
         try :
             category = Members.objects.get(regno = self.request.user.regno).category
