@@ -13,4 +13,8 @@ class Meeting(models.Model):
     date = models.DateField()
     description = models.TextField()
     members = models.CharField(max_length = 200, default = 'All Core Committee Members')
+    latitude = models.CharField(max_length = 100, null = True)
+    longitude = models.CharField(max_length = 100, null = True)
+
+
 
