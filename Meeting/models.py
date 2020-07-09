@@ -15,6 +15,7 @@ class Meeting(models.Model):
     members = models.CharField(max_length = 200, default = 'All Core Committee Members')
     latitude = models.CharField(max_length = 100, null = True)
     longitude = models.CharField(max_length = 100, null = True)
+    time = models.DateTimeField(null = True)
 
 
 
