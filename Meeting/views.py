@@ -46,9 +46,10 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         meeting = self.request.GET.get('meeting')
         regno = self.request.user.regno
-        attendance = Attendance.objects.filter(meeting=meeting, regno = regno)
-        attendance.isPresent = True
-        attendance.save(update_fields=['isPresent'])
+        attendance = Attendance.objects.get(meeting=meeting, regno = regno)
         return (attendance)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
  
