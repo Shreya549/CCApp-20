@@ -47,7 +47,7 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         meeting = self.request.GET.get('meeting')
         regno = self.request.user.regno
-        attendance = Attendance.objects.filter(meeting=meeting, regno = regno).values_list('uuid', flat=True)
+        attendance = Attendance.objects.filter(meeting=meeting, regno = regno).values_list('uuid', flat=True)[0]
         attn = Attendance.objects.get(pk=attendance)
         attn.isPresent = True
         attn.save()
