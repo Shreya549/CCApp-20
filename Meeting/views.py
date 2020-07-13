@@ -38,7 +38,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         instance.delete()
 
-class MarkAttendanceViewSet(viewsets.ModelViewSet):
+'''class MarkAttendanceViewSet(viewsets.ModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = AttendanceSerializer
@@ -50,6 +50,9 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
         return (attendance)
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        return self.update(request, *args, **kwargs)'''
 
- 
+class MarkAttendanceViewSet(RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = AttendanceSerializer
+    queryset = Attendance.objects.all()
