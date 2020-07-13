@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics
-from .serializers import MeetingSerializer
+from .serializers import MeetingSerializer, AttendanceSerializer
 from rest_framework.response import Response
-from .models import Meeting
+from .models import Meeting, Attendance
 from Members.models import Members
 
 # Create your views here.
@@ -16,7 +16,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
- 
+
     def perform_create(self, serializer):
         try :
             category = Members.objects.get(regno = self.request.user.regno).category
@@ -33,8 +33,18 @@ class MeetingViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         instance.delete()
 
-class StartAttendanceViewSet(viewsets.ModelViewSet):
+class MarkAttendanceViewSet(viewsets.ModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = AttendanceSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(
+            owner = self.request.user, name = self.request.user.name, regno = self.request.user.regno)
+
+    def get_queryset(self):
+        meeting = self.request.GET.get('meeting')
+        attendance = Attendance.objects.filter(meeting=meeting)
+        return (attendance)
 
     
