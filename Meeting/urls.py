@@ -9,5 +9,5 @@ router.register('new', MeetingViewSet, basename = 'new')
 urlpatterns = router.urls
 
 urlpatterns +=[
-    path('mark/<uuid:uuid>/', MarkAttendanceViewSet.as_view(), name='mark_attendance')
+    path('mark/<uuid:pk>/', MarkAttendanceViewSet.as_view(), name='mark_attendance')
 ]
