@@ -43,13 +43,12 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = AttendanceSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(
-            owner = self.request.user, name = self.request.user.name, regno = self.request.user.regno)
-
     def get_queryset(self):
         meeting = self.request.GET.get('meeting')
-        attendance = Attendance.objects.filter(meeting=meeting)
+        regno = self.request.user.regno
+        attendance = Attendance.objects.get(meeting=meeting, regno = regno)
+        attendance.isPresent = True
+        attendance.save()
         return (attendance)
 
     
