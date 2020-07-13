@@ -22,6 +22,11 @@ class MeetingViewSet(viewsets.ModelViewSet):
             category = Members.objects.get(regno = self.request.user.regno).category
             if (category == 3 or category == 5):
                 serializer.save(owner=self.request.user)
+                members = Members.objects.filter(category = 1) | Members.objects.filter(category=2)
+                for i in members:
+                    regno = i.regno
+                    entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = regno)
+                    entry.save()
         except:
             pass
     

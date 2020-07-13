@@ -19,9 +19,9 @@ class Meeting(models.Model):
 
 class Attendance(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
-    owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='attendee')
-    name = models.CharField(max_length = 100, null = True)
-    regno = models.CharField(max_length = 10, null = True)
     meeting = models.ForeignKey(Meeting, on_delete = models.CASCADE, related_name = 'meeting_attendance')
-    
+    regno = models.CharField(max_length = 10, null = True)
+    isPresent = models.BooleanField(default=False)
+
+
 
