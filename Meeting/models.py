@@ -19,7 +19,7 @@ class Meeting(models.Model):
 
 class Attendance(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
-    meeting = models.ForeignKey(Meeting, on_delete = models.CASCADE, related_name = 'meeting_attendance')
+    meeting = models.CharField(max_length = 100)
     regno = models.CharField(max_length = 10, null = True)
     isPresent = models.BooleanField(default=False)
 
