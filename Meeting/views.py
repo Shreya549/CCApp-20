@@ -18,14 +18,15 @@ class MeetingViewSet(viewsets.ModelViewSet):
         return self.update(request, *args, **kwargs)
 
     def perform_create(self, serializer):
+        category = Members.objects.get(regno = self.request.user.regno).category
+        if (category == 3 or category == 5):
+            serializer.save(owner=self.request.user)
+            members = Members.objects.all().values_list("regno", flat = True)
+            for i in members:
+                entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = i)
+                entry.save()
         try :
-            category = Members.objects.get(regno = self.request.user.regno).category
-            if (category == 3 or category == 5):
-                serializer.save(owner=self.request.user)
-                members = Members.objects.all().values_list("regno", flat = True)
-                for i in members:
-                    entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = i)
-                    entry.save()
+            pass
         except:
             pass
     
