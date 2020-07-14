@@ -57,3 +57,12 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
         attn.save()
         print(attn)
         return (Attendance.objects.filter(uuid=attendance))
+
+
+class ViewAttendeesViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = AttendanceSerializer
+
+    def get_queryset(self):
+        meeting = self.request.GET.get('meeting')
+        return (Attendance.objects.filter(meeting = meeting))
