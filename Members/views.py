@@ -100,7 +100,7 @@ class MemberNamesList(APIView):
         members_list = []
         for member in members:
             regno = member.regno
-            
+            uuid = member.uuid
             name = ""
             try:
                 profile = MyProfile.objects.get(regno = regno)
@@ -109,6 +109,7 @@ class MemberNamesList(APIView):
                 name = 'Profile does not exist'
             category = member.category
             member_dict = {
+                "uuid" : uuid,
                 "name" : name,
                 "regno" : regno,
                 "category" : category
