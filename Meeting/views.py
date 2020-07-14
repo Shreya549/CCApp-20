@@ -50,7 +50,10 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
         regno = self.request.user.regno
         filters = [DjangoFilterBackend]
         attendance = Attendance.objects.filter(meeting=meeting, regno = regno).values_list('uuid', flat = True)[0]
-        attn = Attendance.objects.filter(pk=attendance)[0]
+        print(attendance)
+        attn = Attendance.objects.get(uuid=attendance)
+        print(attn)
         attn.isPresent = True
         attn.save()
+        print(attn)
         return (attn)
