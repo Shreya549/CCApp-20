@@ -56,4 +56,4 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
         attn.isPresent = True
         attn.save()
         print(attn)
-        return (attn)
+        return (Attendance.objects.all())
