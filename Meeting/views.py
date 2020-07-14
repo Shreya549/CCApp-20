@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from .serializers import MeetingSerializer, AttendanceSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from .models import Meeting, Attendance
 from Members.models import Members
@@ -47,6 +48,7 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         meeting = self.request.GET.get('meeting')
         regno = self.request.user.regno
+        filters = [DjangoFilterBackend]
         attendance = Attendance.objects.filter(meeting=meeting, regno = regno).values_list('uuid', flat = True)
         print(attendance)
         attn = Attendance.objects.get(pk=attendance)
