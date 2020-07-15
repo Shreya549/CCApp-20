@@ -76,7 +76,7 @@ class ViewAttendees(APIView):
         attendance = (Attendance.objects.filter(meeting = meeting))
         attendee_list = []
         for attn in attendance:
-            uuid = regno.uuid
+            uuid = attn.uuid
             regno = attn.regno
             try:
                 profile = MyProfile.objects.get(regno = regno)
