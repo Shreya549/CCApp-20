@@ -8,6 +8,6 @@ router.register('new', MeetingViewSet, basename = 'new')
 router.register('mark', MarkAttendanceViewSet, basename = 'mark')
 urlpatterns = router.urls
 
-urlpatterns+=[
-    path('view', ViewAttendees.as_view())
+urlpatterns+= [
+    path('view/', ViewAttendees.as_view())
 ]
