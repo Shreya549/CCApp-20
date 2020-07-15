@@ -7,6 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from .models import Meeting, Attendance
 from Members.models import Members
+from Accounts.models import User
 
 # Create your views here.
 class MeetingViewSet(viewsets.ModelViewSet):
@@ -79,7 +80,7 @@ class ViewAttendees(APIView):
             uuid = attn.uuid
             regno = attn.regno
             try:
-                profile = MyProfile.objects.get(regno = regno)
+                profile = User.objects.get(regno = regno)
                 name = profile.name
             except:
                 name = 'Name not found'
