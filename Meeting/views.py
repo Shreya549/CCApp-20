@@ -59,27 +59,10 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
         return (Attendance.objects.filter(uuid=attendance))
 
 
-class ViewAttendees(APIView):
+class ViewAttendeesViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = AttendanceSerializer
 
-    def get(self, request):
+    def get_queryset(self):
         meeting = self.request.GET.get('meeting')
-        attendance = (Attendance.objects.filter(meeting = meeting))
-        attendee_list = []
-        for attn in attendance:
-            uuid = regno.uuid
-            regno = attn.regno
-            try:
-                profile = MyProfile.objects.get(regno = regno)
-                name = profile.name
-            except:
-                name = 'Name not found'
-            isPresent = attn.isPresent
-            attn_dict = {
-                "uuid" : uuid,
-                "name" : name,
-                "regno" : regno,
-                "attendance" : isPresent
-            }
-            attendee_list.append(attn_dict)
-        return Response({"attendance" : attendee_list}, status = 200)
+        return (Attendance.objects.filter(meeting = meeting))
