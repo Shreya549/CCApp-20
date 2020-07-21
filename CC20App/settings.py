@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'Profile',
     'Members',
     'Meeting',
-    'Reimbursements'
+    'Reimbursements',
+    'Projects'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True

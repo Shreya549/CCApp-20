@@ -8,7 +8,6 @@ from .serializers import MembersListFileSerializer, MembersSerializer
 from .models import MembersListFile, Members
 from Profile.models import MyProfile
 from django.conf import settings
-import pandas as pd
 import os
 
 
