@@ -3,5 +3,5 @@ from .views import ProjectViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('projects', ProjectViewSet, basename = 'projects')
+router.register('new', ProjectViewSet, basename = 'new')
 urlpatterns = router.urls
