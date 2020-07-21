@@ -4,6 +4,8 @@ from uuid import uuid4
 # Create your models here.
 class Project(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
+    name = models.CharField(max_length = 100, default = 'NAME')
+    description = models.TextField(null = True)
     mentor = models.CharField(max_length = 100)
 
     member1 = models.CharField(max_length = 100)
@@ -20,6 +22,6 @@ class Project(models.Model):
 
     member5 = models.CharField(max_length = 100, null = True)
     regno5 = models.CharField(max_length = 9, null = True)
-    
+
     member6 = models.CharField(max_length = 100, null = True)
     regno6 = models.CharField(max_length = 9, null = True)
