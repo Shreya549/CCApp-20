@@ -11,7 +11,7 @@ import os
 
 # Create your views here.
 class ProjectViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
