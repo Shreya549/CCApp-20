@@ -9,8 +9,8 @@ class Project(models.Model):
     mentor = models.CharField(max_length = 100)
 
     member1 = models.CharField(max_length = 100)
-    member2 = models.CharField(max_length = 100, null = True)
-    member3 = models.CharField(max_length = 100, null = True)
-    member4 = models.CharField(max_length = 100, null = True)
-    member5 = models.CharField(max_length = 100, null = True)
-    member6 = models.CharField(max_length = 100, null = True)
+    member2 = models.CharField(max_length = 100, blank = True, default = "")
+    member3 = models.CharField(max_length = 100, blank = True, default = "")
+    member4 = models.CharField(max_length = 100, blank = True, default = "")
+    member5 = models.CharField(max_length = 100, blank = True, default = "")
+    member6 = models.CharField(max_length = 100, blank = True, default = "")
