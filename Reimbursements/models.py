@@ -1,7 +1,7 @@
 from django.db import models
 from Accounts.models import User
 from uuid import uuid4
-import uuid
+import uuid, os
 
 # Create your models here.
 
@@ -21,8 +21,9 @@ def path_and_rename(instance, filename):
 class Bill(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
     owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='bill')
-    name = models.CharField(max_length = 100)
-    bill = models.ImageField(upload_to = path_and_rename, null = True)
+    name = models.CharField(max_length = 100, null = True)
+    bill = models.ImageField(upload_to = path_and_rename, null = True, blank = True)
+
     remarks = models.TextField(null = True) # By person who will be paid
 
     NOT_REVIEWED = 'Not Reviewed'
