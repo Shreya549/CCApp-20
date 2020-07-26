@@ -23,7 +23,7 @@ class Bill(models.Model):
     owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='bill')
     name = models.CharField(max_length = 100, null = True)
     bill = models.ImageField(upload_to = path_and_rename, null = True, blank = True)
-
+    amount = models.IntegerField(null = True)
     remarks = models.TextField(null = True) # By person who will be paid
 
     NOT_REVIEWED = 'Not Reviewed'
