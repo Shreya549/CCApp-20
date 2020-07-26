@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!9a3qi@kpt+#awaj!i%1sa_*jk=y9_c!h-^!flahrd@jn)&3m)'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -60,8 +60,18 @@ INSTALLED_APPS = [
     'Members',
     'Meeting',
     'Reimbursements',
-    'Projects'
+    'Projects',
+    'storages'
 ]
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_S3_SECURE_URLS = False     
+AWS_QUERYSTRING_AUTH = False   
+
+AWS_S3_ACCESS_KEY_ID = config('AWS_S3_ACCESS_KEY_ID') 
+AWS_S3_SECRET_ACCESS_KEY = config('AWS_S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'app-cc'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
