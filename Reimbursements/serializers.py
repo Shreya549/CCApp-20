@@ -5,4 +5,4 @@ class BillSerializers(serializers.ModelSerializer):
     class Meta:
         model = Bill
         fields = '__all__'
-        read_only_fields = ('owner')
+        read_only_fields = ('owner',)
