@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 import jwt, requests
 from .models import User
+from rest_framework.generics import UpdateAPIView
 from Members.models import Members
 from Members.models import Members
 from rest_framework.views import APIView
