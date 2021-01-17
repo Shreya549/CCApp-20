@@ -71,13 +71,13 @@ INSTALLED_APPS = [
 ]
 
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_S3_SECURE_URLS = False     
-AWS_QUERYSTRING_AUTH = False   
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_S3_SECURE_URLS = False     
+# AWS_QUERYSTRING_AUTH = False   
 
-AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID') 
-AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'app-cc'
+# AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID') 
+# AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = 'app-cc'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto.S3Boto3Storage'
