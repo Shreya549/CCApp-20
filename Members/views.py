@@ -39,11 +39,11 @@ class MembersView(APIView):
         for i in range (l):
             if (path[i]=='/'):
                 count+=1
-            if (count == 3):
+            if (count == 4):
                 break
         path = path[i+1:]
         csv_file = os.path.join(settings.MEDIA_ROOT, path)
-        
+
         try:
             df = pd.read_excel(csv_file, sheet_name = 'Sheet1')
         except:
