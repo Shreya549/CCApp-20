@@ -30,7 +30,6 @@ class MembersView(APIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
-
     def post(self, request):
         path = request.data['path']
 
@@ -40,7 +39,7 @@ class MembersView(APIView):
         for i in range (l):
             if (path[i]=='/'):
                 count+=1
-            if (count == 4):
+            if (count == 3):
                 break
         path = path[i+1:]
         csv_file = os.path.join(settings.MEDIA_ROOT, path)
