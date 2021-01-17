@@ -11,7 +11,6 @@ from django.conf import settings
 import os
 import pandas as pd
 
-
 # Create your views here.
 
 @parser_classes((MultiPartParser, JSONParser))
