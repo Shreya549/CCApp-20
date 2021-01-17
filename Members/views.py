@@ -9,6 +9,7 @@ from .models import MembersListFile, Members
 from Profile.models import MyProfile
 from django.conf import settings
 import os
+import pandas as pd
 
 
 # Create your views here.
@@ -56,8 +57,6 @@ class MembersView(APIView):
                 regno = df.loc[i, 'REGNO'],
                 category = int(df.loc[i, 'CATEGORY'])
                 )
-
-
             except:
                 continue
 
