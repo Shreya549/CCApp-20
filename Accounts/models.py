@@ -9,7 +9,6 @@ from django.conf import settings
 import jwt, time, uuid
 from uuid import uuid4
 
-
 class UserManager(BaseUserManager):
     def create_user(
             self, email, name, regno, password=None,
