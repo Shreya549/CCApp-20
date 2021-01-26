@@ -1,14 +1,11 @@
 from django.urls import path, include
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import UserLogin, UserRegistration, ChangePasswordView
+from .views import UserLogin, UserRegistration, ChangePasswordView, OTPCheckView, OTPView
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
-    # path('api/token/', TokenObtainPairView.as_view()),
-    # path('api/token/refresh/', TokenRefreshView.as_view()),
     path('register/', UserRegistration.as_view()),
     path('login/', UserLogin.as_view()),
-    path('changePassword', ChangePasswordView.as_view())
-
-
+    path('changePassword', ChangePasswordView.as_view()),
+    path('resetPassword', OTPView.as_view()),
+    path('checkOTP', OTPCheckView.as_view()),
 ]

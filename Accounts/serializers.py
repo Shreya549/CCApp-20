@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User 
+from .models import User, OTPStore 
 from django.contrib.auth import authenticate
 
 from rest_framework.response import Response
@@ -72,3 +72,9 @@ class ChangePasswordSerializer(serializers.Serializer):
     """
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+class OTPStoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OTPStore
+        fields = '__all__'
+        read_only_fields = '__all__'

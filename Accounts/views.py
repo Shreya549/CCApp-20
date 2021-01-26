@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.conf import settings
-import jwt, requests
-from .models import User
+import jwt, requests, uuid, os, environ
+from uuid import uuid4
+from .models import User, OTPStore
 from rest_framework.generics import UpdateAPIView
 from Members.models import Members
 from Members.models import Members
@@ -10,7 +11,18 @@ from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework import permissions, generics
 from .serializers import UserLoginSerializer, UserRegistrationSerializer, ChangePasswordSerializer
+from datetime import datetime, timezone
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+environ.Env.read_env()
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CC20App.settings.local")
 
+SENDGRID_API_KEY = env('SENDGRID_API_KEY')
 # Create your views here.
 
 class UserRegistration(APIView):
@@ -32,7 +44,6 @@ class UserRegistration(APIView):
 
         except:
             return Response({"error" : "Username already exists"}, status = 403)
-
 
 class UserLogin(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -79,3 +90,47 @@ class ChangePasswordView(UpdateAPIView):
             return Response(response)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class OTPView(APIView):
+    def post(self, request):
+        email = request.data['email']
+        user = User.objects.filter(email = email)
+        if (user.exists()):
+            code =  (str(uuid.uuid4()))[:8]
+            otp = OTPStore.objects.create(
+                email = email,
+                otp = code,
+                timestamp = datetime.now(timezone.utc)
+            )
+            otp.save()
+            subject = 'Password reset OTP'
+            message = "OTP - " + code + "<br>"
+            msg = message
+            message = Mail(
+                from_email='codechefvit@gmail.com',
+                to_emails=email,
+                subject=subject,
+                html_content=msg)
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            response = sg.send(message)
+            return Response(status = response.status_code)
+        else:
+            return Response({'message' : "Email does not exist"}, status = 400)
+
+class OTPCheckView(APIView):
+    def post(self, request):
+        email = request.data['email'] 
+        otp = request.data['otp']
+        query = OTPStore.objects.filter(email = email, otp = otp).order_by('-timestamp')
+        if (query.exists()):
+            timestamp = query.values_list('timestamp', flat=True)[0]
+            duration = datetime.now(timezone.utc) - timestamp
+            duration_in_s = duration.total_seconds()
+            minutes = divmod(duration_in_s, 60)[0]
+            if (minutes<=5):
+                return Response({"message" : "OTP Verified"}, status = 200)
+            else:
+                return Response({"message" : "Time Out"}, status = 400)
+
+        else:
+            return Response({"message" : "Invalid details entered"}, status = 404)

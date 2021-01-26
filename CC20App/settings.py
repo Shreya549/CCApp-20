@@ -66,8 +66,7 @@ INSTALLED_APPS = [
     'Members',
     'Meeting',
     'Reimbursements',
-    'Projects',
-    'storages'
+    'Projects'
 ]
 
 

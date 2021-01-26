@@ -6,8 +6,8 @@ from datetime import timedelta
 from datetime import datetime as dtime
 from django.conf import settings
 
-import jwt
-import time
+import jwt, time, uuid
+from uuid import uuid4
 
 
 class UserManager(BaseUserManager):
@@ -100,4 +100,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class OTPStore(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key = True)
+    email = models.EmailField()
+    otp = models.CharField(max_length = 8)
+    timestamp = models.DateTimeField()
 
