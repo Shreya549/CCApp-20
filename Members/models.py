@@ -26,6 +26,7 @@ class Members(models.Model):
     owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name='member')
     regno = models.CharField(unique = True, max_length = 10)
     category = models.IntegerField()
+    fcm = models.TextField(null=True)
 
     
 

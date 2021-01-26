@@ -5,7 +5,6 @@ from uuid import uuid4
 from .models import User, OTPStore
 from rest_framework.generics import UpdateAPIView
 from Members.models import Members
-from Members.models import Members
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
@@ -32,6 +31,7 @@ class UserRegistration(APIView):
     def post(self, request):
 
         regno = request.data['regno']
+        fcm = request.data['fcm']
         try:
             category = Members.objects.get(regno = regno).category
         except:
@@ -40,6 +40,11 @@ class UserRegistration(APIView):
         try:
             serializer.is_valid(raise_exception = True)
             serializer.save()
+
+            member = Members.objects.get(regno = regno)
+            member.fcm = fcm
+            member.save()
+
             return Response({"email" : serializer.data["email"],"token" : serializer.data["token"], "category" : category}, status=status.HTTP_201_CREATED)
 
         except:
