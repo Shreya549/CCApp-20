@@ -44,7 +44,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
                 entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = i)
                 entry.save()
 
-            query = Members.objects.filter(category__in = [1,2,3,5]).values_list("regno", "category", "fcm")
+            query = Members.objects.filter(category__in = [1,2,3,5]).values("regno", "category", "fcm")
             return Response({"members" : query}, status=202)
     
     def destroy(self, request, *args, **kwargs):
