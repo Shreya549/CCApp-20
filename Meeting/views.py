@@ -21,18 +21,31 @@ class MeetingViewSet(viewsets.ModelViewSet):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-    def perform_create(self, serializer):
-        category = Members.objects.get(regno = self.request.user.regno).category
+    # def perform_create(self, serializer):
+    #     category = Members.objects.get(regno = self.request.user.regno).category
+    #     if (category == 3 or category == 5):
+    #         serializer.save(owner=self.request.user)
+    #         members = Members.objects.filter(category__in = [1,2]).values_list("regno", flat = True)
+    #         for i in members:
+    #             entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = i)
+    #             entry.save()
+
+    def create(self, request, *args, **kwargs):
+
+        category = Members.objects.get(regno = request.user.regno).category
         if (category == 3 or category == 5):
-            serializer.save(owner=self.request.user)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            serializer.save(owner = self.request.user)
+            headers = self.get_success_headers(serializer.data)
             members = Members.objects.filter(category__in = [1,2]).values_list("regno", flat = True)
             for i in members:
                 entry = Attendance.objects.create(meeting = serializer.data['uuid'], regno = i)
                 entry.save()
-        try :
-            pass
-        except:
-            pass
+
+            query = Members.objects.filter(category__in = [1,2,3,5]).values_list("regno", "category", "fcm")
+            return Response({"members" : query}, status=202)
     
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -50,7 +63,6 @@ class MarkAttendanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         meeting = self.request.GET.get('meeting')
         regno = self.request.user.regno
-        filters = [DjangoFilterBackend]
         attendance = Attendance.objects.filter(meeting=meeting, regno = regno).values_list('uuid', flat = True)[0]
         print(attendance)
         attn = Attendance.objects.get(uuid=attendance)
